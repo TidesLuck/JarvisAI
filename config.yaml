@@ -1,0 +1,51 @@
+text_model:
+  path: "meta-llama/Llama-2-7b"
+  tokenizer: "utils/tokenizer.model"
+  quantization: true
+  lora: true
+vision_model:
+  path: "openai/clip-vit-base-patch32"
+audio_model:
+  path: "openai/whisper-base"
+memory_path: "data/memory.json"
+data_path: "data"
+user_profile_path: "data/user_profile"
+barriers_path: "data/barriers/barriers.json"
+security_key: "your_secret_key"
+web_interface:
+  host: "0.0.0.0"
+  port: 8000
+api:
+  enabled: true
+  port: 8080
+  endpoints:
+    - /api/v1/text
+    - /api/v1/image
+    - /api/v1/audio
+    - /api/v1/code
+learning:
+  thinking_depth: 3
+  recursive_thinking: 9
+  auto_learn: true
+  learning_rate: 0.001
+  rag_enabled: true
+  clustering_enabled: true
+hardware:
+  use_gpu: true
+  min_vram: 8
+  optimize_cpu: true
+cloud_config:
+  provider: "aws"
+  bucket: "jarvisai-backup"
+  sync_interval: 3600
+auto_save_interval: 300
+model_config:
+  dynamic_loading: true
+  sota_models:
+    - "meta-llama/Llama-2-7b"
+    - "openai/whisper-base"
+    - "openai/clip-vit-base-patch32"
+search_config:
+  serpapi_key: "your_serpapi_key"
+unreal_config:
+  engine_path: "/path/to/unreal/engine"

@@ -1,0 +1,109 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JarvisAI Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.0/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/javascript">
+        const { useState, useEffect } = React;
+
+        const App = () => {
+            const [status, setStatus] = useState({});
+            const [command, setCommand] = useState("");
+            const [response, setResponse] = useState("");
+
+            useEffect(() => {
+                axios.get("http://localhost:8000/status")
+                    .then(res => setStatus(res.data))
+                    .catch(err => console.error(err));
+            }, []);
+
+            const executeCommand = () => {
+                axios.post("http://localhost:8000/execute", { prompt: command })
+                    .then(res => setResponse(res.data.response))
+                    .catch(err => setResponse("Ошибка: " + err.message));
+            };
+
+            return (
+                <div className="min-h-screen bg-gray-100 p-6">
+                    <h1 className="text-3xl font-bold text-center mb-6">JarvisAI Dashboard</h1>
+                    <div className="grid grid-cols-3 gap-4 mb-6">
+                        <div className="bg-white p-4 rounded shadow">
+                            <h2 className="text-lg font-semibold">Активные задачи</h2>
+                            <p>{status.tasks || 0}</p>
+                        </div>
+                        <div className="bg-white p-4 rounded shadow">
+                            <h2 className="text-lg font-semibold">Использование памяти (KB)</h2>
+                            <p>{status.memory_usage || 0}</p>
+                        </div>
+                        <div className="bg-white p-4 rounded shadow">
+                            <h2 className="text-lg font-semibold">Файлы знаний</h2>
+                            <p>{status.knowledge_files || 0}</p>
+                        </div>
+                    </div>
+                    <div className="bg-white p-6 rounded shadow">
+                        <h2 className="text-lg font-semibold mb-4">Выполнить команду</h2>
+                        <input
+                            type="text"
+                            className="w-full p-2 border rounded mb-4"
+                            value={command}
+                            onChange={e => setCommand(e.target.value)}
+                            placeholder="Введите команду (например, 'учись doc.txt')"
+                        />
+                        <button
+                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                            onClick={executeCommand}
+                        >
+                            Выполнить
+                        </button>
+                        {response && (
+                            <div className="mt-4 p-4 bg-gray-100 rounded">
+                                <h3 className="font-semibold">Ответ:</h3>
+                                <p>{response}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById("root"));
+    </script>
+</body>
+</html>
