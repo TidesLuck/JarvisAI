@@ -51,7 +51,7 @@ JarvisAI — это ИИ, который работает у тебя на ко�
 4. **Скачай проект**:
    Если проект на GitHub:
    ```bash
-   git clone https://github.com/твой_юзер/JarvisAI.git
+   git clone https://github.com/TidesLuck/JarvisAI.git
    cd JarvisAI
    ```
    Или создай папку `JarvisAI` и скопируй файлы (структура ниже).
@@ -105,7 +105,7 @@ JarvisAI — это ИИ, который работает у тебя на ко�
    !git config --global user.email "твой_email@example.com"
 
    # Клонируй приватный репозиторий (вставь токен GitHub)
-   !git clone https://твой_токен@github.com/твой_юзер/JarvisAI.git
+   !git clone https://github.com/TidesLuck/JarvisAI.git
    %cd JarvisAI
 
    # Установи Python 3.11 и зависимости
