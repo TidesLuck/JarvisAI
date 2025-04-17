@@ -31,7 +31,7 @@ JarvisAI — твой личный ИИ: локальный, мощный, му�
 
 3. Клонируй приватный репозиторий:
    ```bash
-   git clone https://github.com/твой_юзер/JarvisAI.git
+   git clone https://github.com/TidesLuck/JarvisAI.git
    cd JarvisAI
    ```
 
@@ -80,7 +80,7 @@ JarvisAI — твой личный ИИ: локальный, мощный, му�
 1. Создай ноутбук в [Google Colab](https://colab.research.google.com).
 2. Выполни:
    ```python
-   !git clone https://твой_токен@github.com/твой_юзер/JarvisAI.git
+   !git clone https://github.com/TidesLuck/JarvisAI.git
    %cd JarvisAI
    !apt-get update
    !apt-get install -y python3.11 python3.11-dev python3.11-distutils ffmpeg
