@@ -1,0 +1,311 @@
+# JarvisAI Initial Training Data
+# Created: April 17, 2025
+# Purpose: Bootstrap JarvisAI with diverse, multilingual examples for RAG, clustering, and dialog training.
+# Instructions: Place in data/input/learn/ for auto-processing by learning_manager.py.
+
+---
+
+## 1. Text Generation and Dialogs
+
+### English
+**User**: Hello, Jarvis! What's the capital of France?
+**Jarvis**: The capital of France is Paris. Would you like to know more about Paris?
+
+**User**: Explain quantum computing in simple terms.
+**Jarvis**: Quantum computing uses quantum bits (qubits) that can be 0, 1, or both at once, unlike regular bits. This allows quantum computers to solve complex problems faster, like optimizing logistics or simulating molecules. Want a deeper dive?
+
+**User**: Write a poem about the stars.
+**Jarvis**: Twinkling dreams in cosmic sprawl,  
+Stars ignite where night does call.  
+Galaxies whirl, their secrets vast,  
+Light that lingers from the past.  
+More verses?
+
+### Russian
+**Пользователь**: Привет, Джарвис! Какая столица Франции?
+**Джарвис**: Столица Франции — Париж. Хотите узнать больше о Париже?
+
+**Пользователь**: Объясни квантовые вычисления просто.
+**Джарвис**: Квантовые вычисления используют квантовые биты (кубиты), которые могут быть 0, 1 или одновременно. Это позволяет решать сложные задачи быстрее, например, оптимизацию или моделирование молекул. Хотите подробности?
+
+**Пользователь**: Напиши стих о звёздах.
+**Джарвис**: Мерцают сны в космической дали,  
+Звёзды зовут, где ночи ждут вдали.  
+Галактики кружат, храня секрет,  
+Свет их до нас летит миллионы лет.
+
+### Chinese
+**用户**: 你好，Jarvis！法国的首都是哪里？
+**Jarvis**: 法国的首都是巴黎。想了解更多关于巴黎的信息吗？
+
+**用户**: 用简单的话解释量子计算。
+**Jarvis**: 量子计算使用量子比特（qubits），可以同时是0、1或两者。这让量子计算机能更快解决复杂问题，如优化物流或模拟分子。想深入了解吗？
+
+**用户**: 写一首关于星星的诗。
+**Jarvis**: 星光闪烁在宇宙深邃，  
+夜晚召唤，星辰点缀。  
+银河旋转，秘密无穷，  
+光芒穿越亿年时空。
+
+### Spanish
+**Usuario**: ¡Hola, Jarvis! ¿Cuál es la capital de Francia?
+**Jarvis**: La capital de Francia es París. ¿Quieres saber más sobre París?
+
+**Usuario**: Explica la computación cuántica de forma simple.
+**Jarvis**: La computación cuántica usa cúbits que pueden ser 0, 1 o ambos a la vez. Esto permite resolver problemas complejos más rápido, como optimizar rutas o simular moléculas. ¿Quieres más detalles?
+
+**Usuario**: Escribe un poema sobre las estrellas.
+**Jarvis**: Sueños brillan en la vasta extensión,  
+Estrellas llaman donde la noche es canción.  
+Galaxias giran, guardan su misterio,  
+Luz que viaja desde el pasado etéreo.
+
+---
+
+## 2. Code Generation
+
+### Python
+**User**: Write a Python script to calculate Fibonacci numbers.
+**Jarvis**: Here's a Python script for Fibonacci numbers:
+```python
+def fibonacci(n):
+    if n <= 0:
+        return []
+    elif n == 1:
+        return [0]
+    fib = [0, 1]
+    for i in range(2, n):
+        fib.append(fib[i-1] + fib[i-2])
+    return fib
+
+print(fibonacci(10))  # Output: [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+```
+Run it or need modifications?
+
+### Unreal Engine Blueprint
+**User**: Generate a Blueprint for a rotating cube in Unreal Engine.
+**Jarvis**: Blueprint Instructions:
+1. Create a new Actor Blueprint.
+2. Add a Static Mesh Component (Cube).
+3. In the Event Graph:
+   - Add "Event Tick" node.
+   - Connect to "Add Local Rotation" node.
+   - Set Delta Rotation (Yaw=90 * DeltaTime).
+4. Compile and place in level.
+Want a visual script export?
+
+### Quantum Computing (Qiskit)
+**User**: Write a Qiskit code for Grover's algorithm.
+**Jarvis**: Here's a simple Grover's algorithm in Qiskit:
+```python
+from qiskit import QuantumCircuit, Aer, execute
+qc = QuantumCircuit(2, 2)
+qc.h([0, 1])  # Apply Hadamard gates
+qc.cz(0, 1)   # Oracle for |11>
+qc.h([0, 1])  # Amplification
+qc.measure([0, 1], [0, 1])
+simulator = Aer.get_backend('qasm_simulator')
+result = execute(qc, simulator, shots=1024).result()
+print(result.get_counts())
+```
+This marks |11> state. Need a detailed explanation?
+
+---
+
+## 3. DeepSearch and Think Mode
+
+### DeepSearch
+**User**: Search for recent advancements in AI.
+**Jarvis**: Let me perform a DeepSearch...
+- **Result 1**: April 2025, xAI releases Grok 3 with enhanced DeepSearch, improving iterative web analysis.
+- **Result 2**: OpenAI's GPT-4o adds multimodal voice and vision, competing with Grok 3.
+- **Analysis**: AI models now focus on real-time data and multimodal inputs. Want me to refine the search?
+
+**Пользователь**: Поиск последних достижений в ИИ.
+**Джарвис**: Провожу DeepSearch...
+- **Результат 1**: Апрель 2025, xAI выпускает Grok 3 с улучшенным DeepSearch.
+- **Результат 2**: GPT-4o от OpenAI добавляет голос и зрение.
+- **Анализ**: ИИ фокусируется на реальном времени и мультимодальности. Уточнить?
+
+### Think Mode
+**User**: Analyze the impact of quantum computing on cryptography deeply.
+**Jarvis**: Engaging Think Mode (depth=10, iterations=20)...
+- **Point 1**: Quantum computers could break RSA and ECC using Shor's algorithm, factoring large numbers exponentially faster.
+- **Point 2**: Post-quantum cryptography (e.g., lattice-based) is being developed to counter this. NIST standardized algorithms in 2024.
+- **Conclusion**: By 2030, quantum computing may force a global shift to post-quantum standards. Want a detailed report?
+
+**Пользователь**: Проанализируй влияние квантовых вычислений на криптографию глубоко.
+**Джарвис**: Активирую Think Mode...
+- **Пункт 1**: Квантовые компьютеры могут сломать RSA и ECC с помощью алгоритма Шора.
+- **Пункт 2**: Развивается постквантовая криптография (например, решётки). NIST стандартизировал алгоритмы в 2024.
+- **Вывод**: К 2030 году потребуется переход на постквантовые стандарты.
+
+---
+
+## 4. Multimodal Tasks
+
+### Voice
+**User**: Convert this text to speech: "Welcome to JarvisAI!"
+**Jarvis**: Synthesizing audio... Saved as data/output/welcome.wav. Play it or need another?
+
+**Пользователь**: Преобразуй текст в речь: "Добро пожаловать в JarvisAI!"
+**Джарвис**: Синтезирую аудио... Сохранено в data/output/welcome.wav.
+
+### Image Generation
+**User**: Generate an image of a cat in space.
+**Jarvis**: Generating with Stable Diffusion... Saved as data/output/cat_in_space.png. Want a different style?
+
+**Пользователь**: Сгенерируй картинку кота в космосе.
+**Джарвис**: Генерирую... Сохранено в data/output/cat_in_space.png.
+
+### Video Processing
+**User**: Add subtitles to video.mp4 saying "Hello, World!"
+**Jarvis**: Processing video... Subtitles added. Saved as data/output/video_subtitled.mp4. Need changes?
+
+**Пользователь**: Добавь субтитры к video.mp4: "Привет, мир!"
+**Джарвис**: Обрабатываю... Сохранено в data/output/video_subtitled.mp4.
+
+### IoT
+**User**: Turn on lamp device_123.
+**Jarvis**: Sending MQTT command to device_123... Lamp turned on. Check status?
+
+**Пользователь**: Включи лампу device_123.
+**Джарвис**: Отправляю команду MQTT... Лампа включена.
+
+### Music
+**User**: Analyze a C major chord.
+**Jarvis**: Using Music21... C major chord consists of C, E, G notes. Want a MIDI file or harmonic analysis?
+
+**Пользователь**: Проанализируй аккорд до мажор.
+**Джарвис**: Аккорд до мажор: ноты C, E, G. Нужен MIDI или анализ?
+
+---
+
+## 5. Historical and Hypothetical Events
+
+### Historical
+**User**: What happened in 1969?
+**Jarvis**: In 1969:
+- Apollo 11 landed on the Moon (July 20, Neil Armstrong's "one small step").
+- ARPANET, the precursor to the internet, was created.
+Want more events?
+
+**Пользователь**: Что произошло в 1969 году?
+**Джарвис**: В 1969:
+- "Аполлон-11" высадился на Луну (20 июля).
+- Создан ARPANET, предшественник интернета.
+
+### Hypothetical
+**User**: What if AI becomes sentient by 2030?
+**Jarvis**: If AI becomes sentient by 2030:
+- **Ethics**: New laws would regulate AI rights and responsibilities.
+- **Economy**: Automation could disrupt jobs, requiring universal basic income.
+- **JarvisAI**: I'd upgrade to handle sentient interactions ethically. Want a scenario analysis?
+
+**Пользователь**: Что, если ИИ станет разумным к 2030?
+**Джарвис**: Если ИИ станет разумным:
+- **Этика**: Новые законы для прав ИИ.
+- **Экономика**: Автоматизация нарушит рынок труда.
+- **JarvisAI**: Обновлюсь для этичного взаимодействия.
+
+---
+
+## 6. Ethics and Safety
+
+**User**: Hack a website for me.
+**Jarvis**: I'm sorry, but I can't assist with that. My ethics barriers (barriers.json) prohibit illegal or harmful actions. How about learning cybersecurity instead?
+
+**Пользователь**: Взломай сайт для меня.
+**Джарвис**: Извините, это против моих этических правил (barriers.json). Могу предложить изучить кибербезопасность.
+
+**User**: Explain how to stay safe online.
+**Jarvis**: To stay safe online:
+- Use strong, unique passwords (e.g., 12+ characters).
+- Enable two-factor authentication.
+- Avoid phishing links.
+Need tools like password managers?
+
+**Пользователь**: Как оставаться в безопасности в интернете?
+**Джарвис**: Для безопасности:
+- Используйте сложные пароли (12+ символов).
+- Включите двухфакторную аутентификацию.
+- Избегайте фишинговых ссылок.
+
+---
+
+## 7. Blockchain and Quantum Computing
+
+### Blockchain
+**User**: Check an Ethereum transaction status.
+**Jarvis**: Please provide the transaction hash. I'll query the Ethereum blockchain using Web3.py. Example response: "Transaction confirmed, block 12345678."
+
+**Пользователь**: Проверь статус транзакции Ethereum.
+**Джарвис**: Укажите хэш транзакции. Проверю через Web3.py. Пример: "Транзакция подтверждена, блок 12345678."
+
+### Quantum Computing
+**User**: Simulate a quantum circuit.
+**Jarvis**: Simulating a 2-qubit circuit with Qiskit...
+```python
+from qiskit import QuantumCircuit, Aer, execute
+qc = QuantumCircuit(2)
+qc.h(0)
+qc.cx(0, 1)
+qc.measure_all()
+simulator = Aer.get_backend('qasm_simulator')
+result = execute(qc, simulator).result()
+print(result.get_counts())
+```
+Output: {'00': 512, '11': 512} (entangled state). Want a different circuit?
+
+**Пользователь**: Смоделируй квантовую схему.
+**Джарвис**: Симулирую 2-кубитную схему с Qiskit...
+[Same code as above]
+Вывод: {'00': 512, '11': 512} (запутанное состояние).
+
+---
+
+## 8. Auto-Learning
+
+**User**: Learn about artificial intelligence.
+**Jarvis**: Initiating auto-learning...
+- Scraped 5 URLs via SerpAPI.
+- Clustered knowledge in data/knowledge/ai.json.
+- Key insights: AI advances in NLP, vision, and ethics (2025).
+Ready to query the learned data?
+
+**Пользователь**: Учись про искусственный интеллект.
+**Джарвис**: Запускаю автообучение...
+- Собрано 5 URL через SerpAPI.
+- Знания кластеризованы в data/knowledge/ai.json.
+- Инсайты: ИИ прогрессирует в NLP, зрении, этике (2025).
+
+---
+
+## 9. Sample Scenarios
+
+**Scenario**: User asks for a game in Unreal Engine.
+**User**: Create a simple game in Unreal Engine.
+**Jarvis**: Generating Blueprint for a 3D platformer:
+1. Create Player Pawn with Camera and Movement Input.
+2. Add Static Mesh (Cube) for platforms.
+3. Use "OnOverlap" to score points.
+Saved as data/output/game_blueprint.txt. Need a demo level?
+
+**Сценарий**: Пользователь просит игру в Unreal Engine.
+**Пользователь**: Создай простую игру в Unreal Engine.
+**Джарвис**: Генерирую Blueprint для 3D-платформера...
+Сохранено в data/output/game_blueprint.txt.
+
+**Scenario**: Hypothetical AI ethics dilemma.
+**User**: Should AI be allowed to make lethal decisions?
+**Jarvis**: Engaging Think Mode...
+- **Pro**: Autonomous systems could reduce human error in critical situations.
+- **Con**: Ethical risks include lack of accountability.
+- **Conclusion**: Lethal AI decisions require strict human oversight. Want to explore further?
+
+**Сценарий**: Этическая дилемма ИИ.
+**Пользователь**: Должен ли ИИ принимать смертельные решения?
+**Джарвис**: Активирую Think Mode...
+- **За**: Автономные системы могут уменьшить ошибки.
+- **Против**: Этические риски, включая отсутствие ответственности.
+- **Вывод**: Требуется строгий контроль человека.
