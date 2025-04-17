@@ -1,41 +1,45 @@
-import speech_recognition as sr
-from gtts import gTTS
-import os
 import asyncio
-from datetime import datetime
+import speech_recognition as sr
+import pyttsx3
+import whisper
+from config import load_config
 
 class AudioProcessor:
-    def __init__(self, model_config, device):
-        self.device = device
+    def __init__(self):
+        self.config = load_config()
         self.recognizer = sr.Recognizer()
+        self.tts_engine = pyttsx3.init()
+        self.whisper_model = whisper.load_model(self.config["audio_model"]["path"])
+        self.dialog_context = []
 
-    async def recognize_speech(self, audio_path=None):
-        if audio_path:
-            with sr.AudioFile(audio_path) as source:
-                audio = self.recognizer.record(source)
-        else:
-            with sr.Microphone() as source:
-                audio = self.recognizer.listen(source)
+    async def process_audio(self, audio_path):
         try:
-            return self.recognizer.recognize_google(audio)
-        except:
-            return "Не удалось распознать речь."
+            result = self.whisper_model.transcribe(audio_path)
+            text = result["text"]
+            self.dialog_context.append({"user": text})
+            return text
+        except Exception as e:
+            return f"Audio processing error: {str(e)}"
+
+    async def stream_recognition(self):
+        with sr.Microphone() as source:
+            self.recognizer.adjust_for_ambient_noise(source)
+            print("Listening...")
+            audio = self.recognizer.listen(source)
+            try:
+                text = self.recognizer.recognize_google(audio)
+                self.dialog_context.append({"user": text})
+                return text
+            except sr.UnknownValueError:
+                return "Could not understand audio"
+            except sr.RequestError as e:
+                return f"Speech recognition error: {str(e)}"
 
     async def synthesize_speech(self, text):
-        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        output_file = f"data/output/speech_{timestamp}.mp3"
-        tts = gTTS(text=text, lang="ru")
-        tts.save(output_file)
-        return output_file
+        self.dialog_context.append({"ai": text})
+        self.tts_engine.save_to_file(text, "data/output/response.wav")
+        self.tts_engine.runAndWait()
+        return "data/output/response.wav"
 
-    async def process_audio(self, audio_path, action):
-        timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        output_path = f"data/output/modified_audio_{timestamp}.mp3"
-        if action.lower().startswith("голосовая команда"):
-            command = await self.recognize_speech(audio_path)
-            return command
-        with open(audio_path, "rb") as f:
-            content = f.read()
-        with open(output_path, "wb") as f:
-            f.write(content)
-        return output_path
+    def get_dialog_context(self):
+        return self.dialog_context[-5:]  # Keep last 5 exchanges
