@@ -1,51 +1,76 @@
-text_model:
-  path: "meta-llama/Llama-2-7b"
-  tokenizer: "utils/tokenizer.model"
-  quantization: true
-  lora: true
-vision_model:
-  path: "openai/clip-vit-base-patch32"
-audio_model:
-  path: "openai/whisper-base"
-memory_path: "data/memory.json"
-data_path: "data"
-user_profile_path: "data/user_profile"
-barriers_path: "data/barriers/barriers.json"
-security_key: "your_secret_key"
+# General settings
+security_key: "your_secret_key"  # Any secret key for encryption
+debug_mode: false  # Enable for detailed logs
+log_level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+
+# Model configurations
+model_config:
+  text_model:
+    path: "checkpoints/llama"  # LLaMA-2-7B
+    quantization: true  # Reduce memory usage
+    lora: true  # Enable LoRA for fine-tuning
+    max_tokens: 2048  # Max output length
+    temperature: 0.7  # Creativity level
+  vision_model:
+    path: "checkpoints/clip"  # CLIP for image processing
+    resolution: 224  # Image input size
+  audio_model:
+    path: "checkpoints/whisper-large"  # Whisper-large for speech
+    language: "en"  # Default language (en, ru, etc.)
+  image_model:
+    path: "checkpoints/sd"  # Stable Diffusion for image generation
+    inference_steps: 50  # Quality vs speed
+    guidance_scale: 7.5  # How closely to follow prompt
+
+# Search configuration
+search_config:
+  serpapi_key: "your_serpapi_key"  # Get from serpapi.com
+  max_results: 10  # Number of search results
+  deep_search_iterations: 3  # Iterations for DeepSearch (Grok 3-like)
+
+# Learning configuration
+learning_config:
+  thinking_depth: 10  # Depth of reasoning (1-20, Grok 3 Think Mode)
+  recursive_thinking: 20  # Iterations for analysis (1-50)
+  auto_learn: true  # Enable auto-learning from web
+  clustering_enabled: true  # Cluster knowledge for efficiency
+  max_files: 100  # Max files to process in data/input/learn/
+  web_learn_max_urls: 5  # Max URLs for auto_learn.py
+
+# Ethics configuration
+ethics_config:
+  enabled: true
+  barriers_path: "data/barriers/barriers.json"  # Ethical restrictions
+  max_violations: 3  # Ban after 3 unethical requests
+
+# Web interface
 web_interface:
   host: "0.0.0.0"
   port: 8000
-api:
-  enabled: true
-  port: 8080
-  endpoints:
-    - /api/v1/text
-    - /api/v1/image
-    - /api/v1/audio
-    - /api/v1/code
-learning:
-  thinking_depth: 3
-  recursive_thinking: 9
-  auto_learn: true
-  learning_rate: 0.001
-  rag_enabled: true
-  clustering_enabled: true
-hardware:
-  use_gpu: true
-  min_vram: 8
-  optimize_cpu: true
-cloud_config:
-  provider: "aws"
-  bucket: "jarvisai-backup"
-  sync_interval: 3600
-auto_save_interval: 300
-model_config:
-  dynamic_loading: true
-  sota_models:
-    - "meta-llama/Llama-2-7b"
-    - "openai/whisper-base"
-    - "openai/clip-vit-base-patch32"
-search_config:
-  serpapi_key: "your_serpapi_key"
+  api_port: 8080
+  ssl_enabled: false  # Enable for HTTPS
+
+# Device control (IoT)
+device_control:
+  mqtt_broker: "localhost"
+  mqtt_port: 1883
+  mqtt_topic: "jarvis/devices"
+
+# Unreal Engine integration
 unreal_config:
-  engine_path: "/path/to/unreal/engine"
+  engine_path: "/path/to/UnrealEngine"  # Path to Unreal Engine
+  project_path: "/path/to/UEProject"  # Path to your project
+  export_format: "blueprint"  # Options: blueprint, mesh
+
+# Cloud synchronization
+cloud_config:
+  provider: "aws"  # Options: aws, gcp, azure
+  bucket: "jarvisai-backup"
+  access_key: "your_access_key"  # AWS/GCP credentials
+  secret_key: "your_secret_key"
+
+# Dialog configuration
+dialog_config:
+  context_length: 5  # Number of previous exchanges to remember
+  max_response_time: 10  # Seconds to wait for response
+  default_language: "en"  # en, ru, etc.
